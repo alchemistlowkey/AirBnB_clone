@@ -12,20 +12,30 @@ class BaseModel:
     The base model of all other classes
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         """
         Initialization of the BaseModel class
 
         Attributes:
             Public Instance attributes
-            id - assign with an uuid when an instance is created
-            created_at - The current datetime when an instance is created
-            updated_at - The current datetime when an instance is updated
+            args: Arguments(list)
+            kwargs: Key worded arguments(dict)
+            id: Assign with an uuid when an instance is created
+            created_at: The current datetime when an instance is created
+            updated_at: The current datetime when an instance is updated
         """
 
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+        if len(kwargs) > 0:
+            timeformat = "%Y-%m-%dT%H:%M:%S.%f"
+            for key, value in kwargs.items():
+                if key == "created_at" or key == "updated_at":
+                    value = datetime.strptime(kwargs[key], timeformat)
+                if key != "__class__":
+                    setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """
