@@ -12,7 +12,7 @@ class BaseModel:
     The base model of all other classes
     """
 
-    def __init__(self, id, created_at, updated_at):
+    def __init__(self):
         """
         Initialization of the BaseModel class
 
@@ -54,7 +54,9 @@ class BaseModel:
 
         dicto = self.__dict__.copy()
         dicto["__class__"] = self.__class__.__name__
-        dicto[""]
+        dicto["created_at"] = self.created_at.isoformat()
+        dicto["updated_at"] = self.updated_at.isoformat()
+        return dicto
 
 
 
