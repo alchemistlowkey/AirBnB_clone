@@ -4,6 +4,7 @@ The Command Interpreter
 """
 import cmd
 import models
+import re
 from models import storage
 from models.amenity import Amenity
 from models.base_model import BaseModel
@@ -132,6 +133,35 @@ class HBNBCommand(cmd.Cmd):
         obj = storage.all()
         setattr(obj[key], cmd_line[2], cmd_line[3])
         storage.save()
+
+    def default(self, arg):
+        """
+        To retrieve all instances of a class
+
+        Usage:
+            User.all()
+            User.show(id)
+            User.destroy(id)
+            User.update()
+        """
+
+        cmd_form = {
+                "show": self.do_show,
+                "destroy": self.do_destroy,
+                "all": self.do_all,
+                "update": self.do_update
+                }
+        stream = re.search(r"\.", arg)
+        if stream is not None:
+            cmd_line = [arg[:stream.span()[0]], arg[stream.span()[1]:]]
+            stream = re.search(r"\((.*?)\)", cmd_line[1])
+            if stream is not None:
+                cmd = [cmd_line[1][:stream.span()[0]], stream.group()[1:-1]]
+                if cmd[0] in cmd_form.keys():
+                    use = "{} {}".format(cmd_line[0], cmd[1])
+                    return cmd_form[cmd[0]](use)
+        print("** Incorrect command: {} **".format(arg))
+        return False
 
     @classmethod
     def class_verify(cls, line):
