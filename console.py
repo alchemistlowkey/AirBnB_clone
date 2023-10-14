@@ -149,7 +149,8 @@ class HBNBCommand(cmd.Cmd):
                 "show": self.do_show,
                 "destroy": self.do_destroy,
                 "all": self.do_all,
-                "update": self.do_update
+                "update": self.do_update,
+                "count": self.do_count
                 }
         stream = re.search(r"\.", arg)
         if stream is not None:
@@ -162,6 +163,19 @@ class HBNBCommand(cmd.Cmd):
                     return cmd_form[cmd[0]](use)
         print("** Incorrect command: {} **".format(arg))
         return False
+
+    def do_count(self, arg):
+        """
+        This retrieves the number of instances of a class
+        """
+
+        cmd_line = arg.split()
+        argc = 0
+        obj = storage.all()
+        for value in obj.values():
+            if cmd_line[0] == value.__class__.__name__:
+                argc += 1
+        print(argc)
 
     @classmethod
     def class_verify(cls, line):
@@ -184,7 +198,7 @@ class HBNBCommand(cmd.Cmd):
         if len(line) < 2:
             print("** instance id missing **")
             return False
-        objects = models.storage.all()
+        objects = storage.all()
         key = "{}.{}".format(line[0], line[1])
         if key not in objects.keys():
             print("** no instance found **")
