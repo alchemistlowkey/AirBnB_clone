@@ -44,9 +44,11 @@ class FileStorage:
         """
 
         from models.base_model import BaseModel
+        from models.user import User
 
         class_names = {
                 "BaseModel": BaseModel,
+                "User" : User,
                 }
 
         try:

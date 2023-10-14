@@ -6,6 +6,7 @@ import cmd
 import models
 from models import storage
 from models.base_model import BaseModel
+from models.user import User
 
 
 class HBNBCommand(cmd.Cmd):
@@ -16,7 +17,8 @@ class HBNBCommand(cmd.Cmd):
     prompt = "(hbnb) "
 
     classes = {
-            "BaseModel"
+            "BaseModel",
+            "User"
             }
 
     def do_quit(self, line):
