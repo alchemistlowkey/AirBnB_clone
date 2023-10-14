@@ -3,6 +3,7 @@
 File Storage class
 """
 import json
+from os.path import exists
 
 
 class FileStorage:
@@ -53,19 +54,17 @@ class FileStorage:
 
         class_names = {
                 "BaseModel": BaseModel,
-                "User" : User,
-                "Place" : Place,
-                "State" : State,
-                "City" : City,
-                "Amenity" : Amenity,
-                "Review" : Review,
+                "User": User,
+                "Place": Place,
+                "State": State,
+                "City": City,
+                "Amenity": Amenity,
+                "Review": Review,
                 }
 
-        try:
+        if exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, "r", encoding="utf-8") as f:
                 load_file = json.load(f)
-            for key, value in load_file.items():
-                name = value["__class__"]
-                FileStorage.__objects[key] = class_names[name](**value)
-        except:
-            pass
+                for key, value in load_file.items():
+                    name = value["__class__"]
+                    FileStorage.__objects[key] = class_names[name](**value)
