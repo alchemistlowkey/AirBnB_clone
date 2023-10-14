@@ -109,7 +109,17 @@ class HBNBCommand(cmd.Cmd):
         by adding or updating attribute
         """
 
-
+        cmd_line = arg.split()
+        if not self.class_verify(cmd_line):
+            return
+        if not self.id_verify(cmd_line):
+            return
+        if not self.attr_verify(cmd_line):
+            return
+        key = "{}.{}".format(cmd_line[0], cmd_line[1])
+        obj = storage.all()
+        setattr(obj[key], cmd_line[2], cmd_line[3])
+        storage.save()
 
     @classmethod
     def class_verify(cls, line):
