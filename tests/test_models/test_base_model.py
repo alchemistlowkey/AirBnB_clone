@@ -15,6 +15,7 @@ class TestBaseModel(unittest.TestCase):
     """
     Test cases for BaseModel class
     """
+    model = BaseModel()
 
     def test_init(self):
         """
@@ -27,10 +28,10 @@ class TestBaseModel(unittest.TestCase):
         self.model.save()
         model_json = self.model.to_dict()
 
-        self.assertEqual(self.model.name, model_json['name'])
-        self.assertEqual(self.model.my_number, model_json['my_number'])
-        self.assertEqual('BaseModel', model_json['__class__'])
-        self.assertEqual(self.model.id, model_json['id'])
+        self.assertEqual(self.model.name, model_json["name"])
+        self.assertEqual(self.model.my_number, model_json["my_number"])
+        self.assertEqual("BaseModel", model_json["__class__"])
+        self.assertEqual(self.model.id, model_json["id"])
 
     def test_str(self):
         """
