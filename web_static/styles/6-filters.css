@@ -67,7 +67,7 @@
 }
 
 .locations:hover .popover,
-.amenities:hover .popover{
+.amenities:hover .popover {
     display: inline-block;
 }
 
